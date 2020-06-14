@@ -1,0 +1,13 @@
+.elements__card-icon {
+    background-image: url('../../../images/Vector-like.svg');
+    background-color: #FFFFFF;
+    border: none;
+    width: 21px;
+    height: 19px;
+    margin-top: 31px;
+    margin-right: 20px;
+    }
+    
+    .elements__card-icon:hover {
+    opacity: 0.6;
+    }
