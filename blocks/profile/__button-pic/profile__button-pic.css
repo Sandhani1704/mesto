@@ -5,3 +5,11 @@
     align-items: center;
     justify-content: center;  
     }
+
+@media screen and (max-width: 380px) {
+        .profile__button-pic {
+        width: 7.5px;
+        height: 7.5px;
+        margin-bottom: 5px;
+        }
+        }    

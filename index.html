@@ -11,11 +11,16 @@
         <header class="header">
             <img class="header__logo" src="./images/logo.png" alt="Логотип Mestro">
         </header>
+
+        <main class="content">
+
         <section class="profile">
             <img class="profile__avatar" src="./images/image.jpg" alt="Аватар">
             <div class="profile__info">
-                <h1 class="profile__user">Жак-Ив Кусто</h1>
-                <button type="button" class="profile__button-edit popup__open"><img class="profile__button-pic" src="./images/Vector_1.png" alt="Редактировать"></button>
+                <div class="profile__title">
+                  <h1 class="profile__user">Жак-Ив Кусто</h1>
+                  <button type="button" class="profile__button-edit"><img class="profile__button-pic" src="./images/Vector_1.png" alt="Редактировать"></button>
+                </div>
                 <p class="profile__user-explorer">Исследователь океана</p>
             </div>
             <button type="button" class="profile__button-add"><img class="profile__button-vector" src="./images/Vector.png" alt="Добавить"></button>
@@ -72,18 +77,20 @@
         
         </section>
 
+        </main>
+
         <footer class="footer">
             <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
         </footer>
 
         <section class="popup">
             <div class="popup__container">
-                <img class="popup__close-icon popup__close" src="./images/Close_Icon.png" alt="закрыть">
-                <p class="popup__title">Редактировать профиль</p>
+                <button type="button" class="popup__close"><img class="popup__close-icon" src="./images/Close_Icon.svg" alt="закрыть"></button>
+                <h3 class="popup__title">Редактировать профиль</h3>
                 <form class="popup__form" name="profile">
-                    <input type="text" name="userName" class="popup__input popup__input_type_name" minlength="4" maxlength="30" required="" placeholder="">
-                    <input type="text" name="userJob" class="popup__input popup__input_type_job" minlength="4" maxlength="30" required="" placeholder="">
-                    <button type="submit" class="popup__button popup__button_save-profile">Сохранить</button>
+                    <input type="text" name="userName" class="popup__input popup__input_type_name" required="" placeholder="">
+                    <input type="text" name="userJob" class="popup__input popup__input_type_job" required="" placeholder="">
+                    <button type="submit" class="popup__button">Сохранить</button>
                 </form>
             </div>
 

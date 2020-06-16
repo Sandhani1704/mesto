@@ -6,6 +6,7 @@
     color: #000000;
     margin-top: 25px;
     margin-left: 20px;
+    max-width: 200px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

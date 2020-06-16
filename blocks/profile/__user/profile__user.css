@@ -6,7 +6,10 @@
     color: #FFFFFF;
     margin-top: 18px;
     margin-bottom: 16px;
-    }
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
     
 @media screen and (max-width: 970px) {
 .profile__user {
@@ -18,5 +21,6 @@ margin-left: auto;
 @media screen and (max-width: 380px) {
 .profile__user {
 font-size: 27px;
+max-width: 201px;
 }
 } 

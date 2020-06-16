@@ -12,3 +12,9 @@ flex-shrink: 0;
 object-fit: contain;
 }
 }
+
+@media screen and (max-width: 320px) {
+    .header__logo{
+    margin-bottom: 31px;
+    }
+    }

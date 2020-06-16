@@ -6,6 +6,7 @@
     height: 19px;
     margin-top: 31px;
     margin-right: 20px;
+    cursor: pointer;
     }
     
     .elements__card-icon:hover {
