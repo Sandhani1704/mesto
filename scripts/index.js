@@ -7,8 +7,6 @@ let profileUserJob = document.querySelector('.profile__user-explorer');
 let nameInput = document.querySelector('.popup__input_type_name');
 let jobInput = document.querySelector('.popup__input_type_job');
 
-let profileUserElement = document.querySelector('.profile__user');
-let profileUserExplorerElement = document.querySelector('.profile__user-explorer');
 let formElement = document.querySelector('.popup__container');
 
 function setPopupDetails() {
@@ -17,8 +15,8 @@ jobInput.value = profileUserJob.textContent;
 }
 
 function setProfileDetails() {
-profileUserElement.textContent = nameInput.value;
-profileUserExplorerElement.textContent = jobInput.value;
+profileUserName.textContent = nameInput.value;
+profileUserJob.textContent = jobInput.value;
 }
 
 let popupToggle = function () {
@@ -30,8 +28,6 @@ let popupToggle = function () {
 
 popupOpenButton.addEventListener('click', popupToggle);
 popupCloseButton.addEventListener('click', popupToggle);
-
-
 
 function formSubmitHandler(evt) {
     evt.preventDefault();
