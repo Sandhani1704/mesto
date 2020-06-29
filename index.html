@@ -27,7 +27,8 @@
         </section>
         
         <section class="elements">
-            <div class="elements__card">
+           <!--  <div class="elements__card">
+                <button type="button" class="elements__remove-button"></button>
                 <img class="elements__card-image" src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
                 <div class="elements__card-description">
                     <p class="elements__card-name">Карачаевск</p>
@@ -73,7 +74,7 @@
                     <p class="elements__card-name">Карачаево-Черкесия</p>
                     <button type="button" class="elements__card-icon"></button>
                 </div>
-            </div>
+            </div> -->
         
         </section>
 
@@ -95,6 +96,38 @@
             </div>
 
         </section>
+
+        <section class="popup popup-element">
+            <div class="popup__container popup-element__container">
+                <button type="button" class="popup__close popup-element__close"><img class="popup__close-icon popup-element__close-icon" src="./images/Close_Icon.svg" alt="закрыть"></button>
+                <h3 class="popup__title popup-element__title">Новое место</h3>
+                <form class="popup__form popup-element__form" name="new-element">
+                    <input type="text" name="title" class="popup__input popup-element__input_type_title" required="" placeholder="Название">
+                    <input type="text" name="link-img" class="popup__input popup-element__input_type_link-img" required="" placeholder="Ссылка на картинку">
+                    <button type="submit" class="popup__button popup-element__button">Создать</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="popup popup-image">
+            <div class="popup-image__overlay"></div>
+            <div class="popup-image__cover">
+              <img src="" alt="" class="popup-image__image">
+              <p class="popup-image__caption"></p>
+              <button type="button" class="popup__close popup-image__close-button"><img class="popup__close-icon" src="./images/Close_Icon.svg" alt="закрыть"></button>
+            </div>
+        </section>
+
+        <template id="element">
+            <div class="elements__card">
+                <button type="button" class="elements__remove-button"></button>
+                <img src="" alt="" class="elements__card-image">
+                <div class="elements__card-description">
+                    <p class="elements__card-name"></p>
+                    <button type="button" class="elements__card-icon"></button>
+                </div>
+            </div>
+        </template>
         
     </div>
     <script src="./scripts/index.js"></script>        

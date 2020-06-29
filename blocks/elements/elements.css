@@ -3,6 +3,9 @@
 @import url(./__card-image/elements__card-image.css);
 @import url(./__card-name/elements__card-name.css);
 @import url(./__card/elements__card.css);
+@import url(./__remove-button/elements__remove-button.css);
+@import url(./__card-icon/elements__card-icon.css);
+@import url(./__card-icon/_active/elements__card-icon_active.css);
 
 .elements {
     display: grid;
