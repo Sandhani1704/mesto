@@ -97,32 +97,27 @@ const addCard = function (item) {
     // наполняем содержимым
     element.querySelector('.elements__card-name').textContent = item.name;
     element.querySelector('.elements__card-image').src = item.link;
-    
+    element.querySelector('.elements__card-image').alt = item.name;
+
     element.querySelector('.elements__remove-button').addEventListener('click', deleteElement);
     element.querySelector('.elements__card-icon').addEventListener('click', function (evt) {
         evt.target.classList.toggle('elements__card-icon_active');
     });
+
     const ElementsTitle = element.querySelector('.elements__card-name');
     const ElementsImage = element.querySelector('.elements__card-image');
-    const cardImage = element.querySelector('.elements__card-image');
-
-    cardImage.addEventListener('click', function (evt) {
+    
+    //открываем pop-up с картинкой
+     ElementsImage.addEventListener('click', function (evt) {
        evt.target.closest('.elements__card-image');
        popupCaption.textContent = ElementsTitle.textContent;
        popupImagePicture.src = ElementsImage.src;
         ThirdPopupToggleImages();
     });
+    
     // отображаем на странице
     elements.prepend(element);
 } 
-
-/*let imageCover = document.querySelector('.popup-image').addEventListener('click', function(event){
-    ThirdPopupToggleImages();
-});*/
-
-const imageCover = document.querySelector('.popup-image__close-button').addEventListener('click', function(event){
-    ThirdPopupToggleImages();
-});
 
 initialCards.forEach(item => {
     addCard(item);
@@ -147,6 +142,11 @@ function deleteElement (e) {
     const elementsCard = e.target.closest('.elements__card');
     elementsCard.remove();
 };
+
+//закрываем попап с изображением
+const imageCover = document.querySelector('.popup-image__close-button').addEventListener('click', function(event){
+    ThirdPopupToggleImages();
+});
 
 popupOpenButton.addEventListener('click', popupToggle);
 popupCloseButton.addEventListener('click', popupToggle);
