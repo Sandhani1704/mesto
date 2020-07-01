@@ -66,11 +66,8 @@ profileUserJob.textContent = jobInput.value;
 }
 
 const togglePopup = function (popup) {
-    popup.classList.toggle('popup_opened'); if 
-    (popup.classList.contains('popup_opened')) {
-      setPopupDetails();
-      }
-     }
+    popup.classList.toggle('popup_opened'); 
+}
 
 function formSubmitHandler(evt) {
     evt.preventDefault();
@@ -146,7 +143,11 @@ const imageCover = document.querySelector('.popup-image__close-button').addEvent
     togglePopup(popupImage);
 });
 
-popupOpenButton.addEventListener('click', () => togglePopup(popup));
+popupOpenButton.addEventListener('click', () => { 
+    setPopupDetails(); 
+    togglePopup(popup);
+});
+
 popupCloseButton.addEventListener('click', () => togglePopup(popup));
 formElement.addEventListener('submit', formSubmitHandler);
 popupElementOpenButton.addEventListener('click', () => togglePopup(popupElement));
