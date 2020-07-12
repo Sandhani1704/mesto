@@ -8,3 +8,7 @@
     box-sizing: border-box;
     padding: 5px 6px 13px;    
     }
+
+    .popup__input:invalid {
+    border-bottom: 1px solid #FF0000;
+    }
