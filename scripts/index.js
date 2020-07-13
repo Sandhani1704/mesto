@@ -1,6 +1,6 @@
-const popup = document.querySelector('.popup');
+const popup = document.querySelector('.popup-profile');
 const popupOpenButton = document.querySelector('.profile__button-edit');
-const popupCloseButton = popup.querySelector('.popup__close');
+//const popupCloseButton = popup.querySelector('.popup__close');
 const profileUserName = document.querySelector('.profile__user');
 const profileUserJob = document.querySelector('.profile__user-explorer');
 
@@ -8,7 +8,7 @@ const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 
 const formElement = document.querySelector('.popup__container');
-const formElementPictures = document.querySelector('.popup-element__container');
+//const formElementPictures = document.querySelector('.popup-element__container');
 
 const popupElementOpenButton = document.querySelector('.profile__button-add');
 const popupElement = document.querySelector('.popup-element');
@@ -181,7 +181,8 @@ profileOverlay.addEventListener('click', () => togglePopup(popup));
 
 formElement.addEventListener('submit', formSubmitHandler);
 popupElementOpenButton.addEventListener('click', () => togglePopup(popupElement));
-popupElementCloseButton.addEventListener('click', () => togglePopup(popupElement));
+//popupElementCloseButton.addEventListener('click', () => togglePopup(popupElement));
+//popupElementCloseButton.addEventListener('click', () => closePopupAndHideErrors(popupElement, config));
 
 //закрываем попапы нажатием на Escape
 document.addEventListener('keydown', (evt) => {
@@ -218,11 +219,25 @@ enableValidation(config);
   }; */
 
   const closePopupAndHideErrors = function(popup, config) {
-    const formElement = document.querySelector(config.formSelector);
+    const formElement = popup.querySelector(config.formSelector);
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     inputList.forEach((inputElement) => {
         hideError(formElement, inputElement, config);
+        inputElement.value = '';
     });
     popup.classList.remove('popup_opened');
-  };  
-popupCloseButton.addEventListener('click', () => closePopupAndHideErrors(popup, config));
+};
+
+function findAllPopups() {
+    const allPopup = Array.from(document.querySelectorAll('.popup'));
+    return allPopup;
+}
+
+function findCloseButton(popupElement) {
+    return popupElement.querySelector('.popup__close')
+}
+
+//popupCloseButton.addEventListener('click', () => closePopupAndHideErrors(popup, config));
+//popupElementCloseButton.addEventListener('click', () => closePopupAndHideErrors(popupElement, config));
+
+findAllPopups().forEach(p => findCloseButton(p).addEventListener('click', () => closePopupAndHideErrors(p, config)));
