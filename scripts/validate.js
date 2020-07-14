@@ -1,9 +1,3 @@
-
-//const popupFormElement = document.querySelector('.popup__form');
-//const popupInput = popupFormElement.querySelector('.popup__input');
-//const formError = popupFormElement.querySelector(`#${popupInput.id}-error`); 
-//const buttonElement = document.querySelector('.popup__button');
-
 // Функция, которая добавляет класс с ошибкой
   const showError = (formElement, inputElement, errorMessage, validationConfig) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
