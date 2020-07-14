@@ -52,7 +52,7 @@ const toggleButtonState = (inputList, buttonElement) => {
 const setEventListeners = (formElement, validationConfig) => {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
-  //toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement, validationConfig);
@@ -77,16 +77,17 @@ const hasInvalidInput = (inputList) => {
 
 
 // функция валидации формы на основании параметров в объекте
-const enableValidation = (validationConfig) => {
+  const enableValidation = (validationConfig) => {
   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
   formList.forEach((formElement) => {
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
   });
   setEventListeners(formElement, validationConfig);
-
+  
   });
 }
+ 
 
 
 

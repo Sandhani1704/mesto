@@ -193,12 +193,15 @@ profileOverlay.addEventListener('click', () => closePopup(popup));
 popupCloseButton.addEventListener('click', () => closePopup(popup));
 
 formElement.addEventListener('submit', formSubmitHandler);
-popupElementOpenButton.addEventListener('click', () => {
+/* popupElementOpenButton.addEventListener('click', () => {
     openPopup(popupElement);
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     const buttonElement = formElement.querySelector('.popup__button'); 
     toggleButtonState(inputList, buttonElement);
-});
+}); */
+
+popupElementOpenButton.addEventListener('click', () => openPopup(popupElement));
+
 popupElementCloseButton.addEventListener('click', () => closePopup(popupElement));
 //popupElementCloseButton.addEventListener('click', () => closePopupAndHideErrors(popupElement, config));
 
