@@ -81,6 +81,7 @@ profileUserJob.textContent = jobInput.value;
 //const togglePopup = function (popup) 
 const openPopup = function (popup) {
     popup.classList.add('popup_opened');
+    const formElement = popup.querySelector('.popup__form')
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     const buttonElement = formElement.querySelector('.popup__button'); 
     toggleButtonState(inputList, buttonElement);
