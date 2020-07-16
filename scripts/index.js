@@ -171,7 +171,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 popupElementOpenButton.addEventListener('click', () => {
     openPopupAndHideErrors(popupElement, config);
     openPopup(popupElement);
-    const formElement = popup.querySelector('.popup__form')
+    const formElement = popupElement.querySelector('.popup__form')
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     const buttonElement = formElement.querySelector('.popup__button');
     toggleButtonState(inputList, buttonElement);
