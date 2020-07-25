@@ -32,6 +32,7 @@ class Card {
     this._name = name;
     this._link = link;
     this._cardTemplate = cardTemplate;
+    this._isLiked = false;
     }
 
     _getTemplate() {
@@ -41,17 +42,41 @@ class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-        //this._setEventListeners();
-    
+         
         this._element.querySelector('.elements__card-name').textContent = this._name;
         this._element.querySelector('.elements__card-image').src = this._link;
     
         return this._element;
+        
     }
+
+    //_setEventListeners()
+
+    _handleLikeIcon() {
+    this._isLiked = !this._isLiked;
+    this._likeBtn.classList.toggle('elements__card-icon_active');
+    //this._element.querySelector('.elements__card-icon').addEventListener('click', (e) => {
+    //e.target.classList.toggle('elements__card-icon_active')});
+    }
+
+    _setEventListeners() {
+        this._likeBtn.addEventListener('click', () => this._handleLikeIcon());
+       // this._delBtn.addEventListener('click', () => this._handleDeleteEvent());
+        //this._image.addEventListener('click', () => this._handleViewEvent());
+      }
+
+    _deleteElement() {
+        _element.querySelector('.elements__remove-button').addEventListener('click', (e) => {
+            const elementsCard = e.target.closest('.elements__card');
+            elementsCard.remove();
+    })
+}
+
 }
 
 initialCards.forEach(({name, link}) => {
-const card = new Card(name, link, '.element');
+const card = new Card(name, link, '#element');
 const cardElement = card.generateCard();
 document.querySelector('.elements').prepend(cardElement);
 })
+
