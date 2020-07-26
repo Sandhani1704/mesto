@@ -1,33 +1,5 @@
+import {initialCards} from './cards-init.js';
 import {handlePreviewPicture} from './index.js';
-
-
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
 
 export class Card {
     constructor (name, link, cardTemplate) {
@@ -66,13 +38,7 @@ export class Card {
     } 
 
 _handleOpenPopup() {
-   /* this._popupImagePicture = document.querySelector('.popup-image__image');
-    this._popupCaption = document.querySelector('.popup-image__caption');
-    popupImagePicture.src = this._link;
-    popupImagePicture.alt = `Изображение ${this._name}`
-    popupCaption.textContent = this._name;
-    this._popupImagePicture.classList.add('popup_opened');*/
-    handlePreviewPicture({link: this._link, name: this._name})
+   handlePreviewPicture({link: this._link, name: this._name})
   }
 
 _setEventListeners() {
