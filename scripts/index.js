@@ -137,7 +137,7 @@ popupElement.addEventListener('submit', e => {
     const link = linkElementInput.value;
     titleElementInput.value = '';
     linkElementInput.value = '';
-    generateCard({
+    renderCard({
         //name: text,
         //link: link
         link: this._link, name: this._name
