@@ -49,9 +49,4 @@ _setEventListeners() {
 
 }
 
-initialCards.forEach(({name, link}) => {
-const card = new Card(name, link, '#element');
-const cardElement = card.generateCard();
-document.querySelector('.elements').prepend(cardElement);
-})
 

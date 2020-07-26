@@ -1,4 +1,4 @@
-import {Card} from './card';
+import {Card} from './card.js';
 import {initialCards} from './cards-init.js';
 //import {Card} from './сard.js';
 
@@ -10,7 +10,7 @@ const profileUserJob = document.querySelector('.profile__user-explorer');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 const formElement = document.querySelector('.popup__container');
-const popupElementOpenButton = document.querySelector('.profile__button-add');
+const popupElementAddButton = document.querySelector('.profile__button-add');
 const popupElement = document.querySelector('.popup-element');
 const popupElementCloseButton = document.querySelector('.popup-element__close');
 const titleElementInput = document.querySelector('.popup-element__input_type_title');
@@ -110,13 +110,25 @@ export function handlePreviewPicture(data) {
     openPopup(popupImage);
 }
 
+/*initialCards.forEach(function({name, link}) {
+    const card = new Card(name, link, '#element');
+    const cardElement = card.generateCard();
+    document.querySelector('.elements').prepend(cardElement);
+});*/
+
+initialCards.forEach(({name, link}) => {
+    const card = new Card(name, link, '#element');
+    const cardElement = card.generateCard();
+    document.querySelector('.elements').prepend(cardElement);
+})
+    
 /*function renderCard(item) {
     let element = generateCard(item);
     elements.prepend(element);
 } */
 //создаем новые карточки
-const renderCard = function(name, link, cardTemplate) {
-    const card = new Card(name, link, cardTemplate);
+const renderCard = function({name, link}) {
+    const card = new Card(name, link, '#element');
     const cardElement = card.generateCard();
     document.querySelector('.elements').prepend(cardElement);
   }
@@ -133,15 +145,15 @@ const renderCard = function(name, link, cardTemplate) {
 //добавляем карточки на страницу
 popupElement.addEventListener('submit', e => {
     e.preventDefault();
-    const text = titleElementInput.value;
+    const name = titleElementInput.value;
     const link = linkElementInput.value;
     titleElementInput.value = '';
     linkElementInput.value = '';
     renderCard({
-        //name: text,
-        //link: link
-        link: this._link, name: this._name
+        name: name,
+        link: link
     });
+
     closePopup(popupElement);
 });
 
@@ -179,7 +191,7 @@ popupCloseButton.addEventListener('click', () => closePopup(popup));
 
 formElement.addEventListener('submit', formSubmitHandler);
 
-popupElementOpenButton.addEventListener('click', () => {
+popupElementAddButton.addEventListener('click', () => {
     //openPopupAndHideErrors(popupElement, config);
     openPopup(popupElement);
     //const formElement = popupElement.querySelector('.popup__form')
@@ -187,8 +199,7 @@ popupElementOpenButton.addEventListener('click', () => {
     //const buttonElement = formElement.querySelector('.popup__button');
     //toggleButtonState(inputList, buttonElement);
     
-}
-);
+});
 
 popupElementCloseButton.addEventListener('click', () => closePopup(popupElement));
 
