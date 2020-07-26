@@ -1,3 +1,6 @@
+
+import {Card} from './card.js';
+
 const popup = document.querySelector('.popup-profile');
 const popupOpenButton = document.querySelector('.profile__button-edit');
 const popupCloseButton = popup.querySelector('.popup__close');
@@ -99,7 +102,7 @@ const addCard = function (item) {
     return element;
 }
 
-function handlePreviewPicture(data) {
+export function handlePreviewPicture(data) {
     popupImagePicture.src = data.link;
     popupImagePicture.alt = `Изображение ${data.name}`;
     popupCaption.textContent = data.name;

@@ -1,3 +1,6 @@
+import {handlePreviewPicture} from './index.js';
+
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -25,10 +28,8 @@ const initialCards = [
     }
 ];
 
-const popupImagePicture = document.querySelector('.popup-image__image');
-const popupCaption = document.querySelector('.popup-image__caption');
 
-class Card {
+export class Card {
     constructor (name, link, cardTemplate) {
     this._name = name;
     this._link = link;
@@ -43,7 +44,10 @@ class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-        
+        this._deleteButton = this._element.querySelector('.elements__remove-button');
+        this._likeButton = this._element.querySelector('.elements__card-icon');
+        this._elementsCard = this._element.querySelector('.elements__card');
+        this._image = this._element.querySelector('.elements__card-image');
         this._element.querySelector('.elements__card-name').textContent = this._name;
         this._element.querySelector('.elements__card-image').src = this._link;
         this._setEventListeners() 
@@ -53,28 +57,28 @@ class Card {
 
     _handleLikeIcon() {
     this._isLiked = !this._isLiked;
-    this._element.classList.toggle('elements__card-icon_active');
+    this._likeButton.classList.toggle('elements__card-icon_active');
     }
 
           
     _deleteElement() {
-        this._element.querySelector('.elements__remove-button').addEventListener('click', (e) => {
-            const elementsCard = e.target.closest('.elements__card');
-            elementsCard.remove();
-    })
-} 
+    this._elementsCard.remove();
+    } 
 
 _handleOpenPopup() {
+   /* this._popupImagePicture = document.querySelector('.popup-image__image');
+    this._popupCaption = document.querySelector('.popup-image__caption');
     popupImagePicture.src = this._link;
     popupImagePicture.alt = `Изображение ${this._name}`
     popupCaption.textContent = this._name;
-    popupImagePicture.classList.add('popup_opened');
+    this._popupImagePicture.classList.add('popup_opened');*/
+    handlePreviewPicture({link: this._link, name: this._name})
   }
 
 _setEventListeners() {
-    this._element.addEventListener('click', () => this._handleLikeIcon());
-    this._element.addEventListener('click', () => this._deleteElement());
-    this._element.addEventListener('click', () => this._handleOpenPopup());
+    this._likeButton.addEventListener('click', () => this._handleLikeIcon());
+    this._deleteButton.addEventListener('click', () => this._deleteElement());
+    this._image.addEventListener('click', () => this._handleOpenPopup());
   }
 
 }
