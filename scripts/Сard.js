@@ -1,4 +1,4 @@
-import {initialCards} from './cards-init.js';
+//import {initialCards} from './cards-init.js';
 import {handlePreviewPicture} from './index.js';
 
 export class Card {
@@ -46,7 +46,6 @@ _setEventListeners() {
     this._deleteButton.addEventListener('click', () => this._deleteElement());
     this._image.addEventListener('click', () => this._handleOpenPopup());
   }
-
 }
 
 
