@@ -1,0 +1,23 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Learning platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sandhani1704/mesto.git"
+  },
+  "author": "Anna Galkina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sandhani1704/mesto/issues"
+  },
+  "homepage": "https://github.com/Sandhani1704/mesto#readme",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

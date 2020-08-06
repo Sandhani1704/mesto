@@ -2,6 +2,7 @@ import { Card } from './Сard.js';
 import { initialCards } from './cards-init.js';
 import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup } from './utils.js';
+//import Section from './Section.js'
 
 const popup = document.querySelector('.popup-profile');
 const popupOpenButton = document.querySelector('.profile__button-edit');
@@ -35,6 +36,22 @@ const config = {
 
 }
 
+ const containerСardElementsSelector = '.elements';
+
+const initialCardList = new Section ({
+    items: initialCards, 
+    
+    renderer: (item) => {//функция, которая отвечает за создание и отрисовку данных на странице
+      const card = new Card(item, '#element');
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    },
+  }, 
+  containerСardElementsSelector
+  );
+
+  initialCardList.renderItems();  // создание первоначальных карточек
+
 const popupProfileValidator = new FormValidator(config, popup);
 const popupElementValidator = new FormValidator(config, popupElement);
 
@@ -60,7 +77,7 @@ function formSubmitHandler(evt) {
 
 }
 
-initialCards.forEach(({ name, link }) => {
+ initialCards.forEach(({ name, link }) => {
     const card = new Card(name, link, '#element');
     const cardElement = card.generateCard();
     elements.prepend(cardElement);
