@@ -105,11 +105,11 @@ function formSubmitHandler(evt) {
 
 } */
 
-  /*  initialCards.forEach(({ name, link }) => {
+    initialCards.forEach(({ name, link }) => {
     const card = new Card(name, link, '#element');
     const cardElement = card.generateCard();
     elements.prepend(cardElement);
-}) */
+}) 
 
 
 //создаем новые карточки
