@@ -35,7 +35,7 @@ export class Card {
         image.src = this._link;
         image.alt = this._name;
         caption.textContent = this._name;
-        openPopup(this._picturePopup);
+        //openPopup(this._picturePopup);
     }
 
     _handleLikeIcon() {
