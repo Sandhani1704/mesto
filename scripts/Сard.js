@@ -1,11 +1,12 @@
 import { openPopup } from './utils.js';
 
 export class Card {
-    constructor(name, link, cardTemplate) {
+    constructor(name, link, cardTemplate, handleCardClick) {
         this._name = name;
         this._link = link;
         this._cardTemplate = cardTemplate;
         this._isLiked = false;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -29,12 +30,13 @@ export class Card {
     }
 
     _handlePreviewPicture() {
-        this._picturePopup = document.querySelector('.popup-image');
+        
+        /*this._picturePopup = document.querySelector('.popup-image');
         const image = this._picturePopup.querySelector('.popup-image__image');
         const caption = this._picturePopup.querySelector('.popup-image__caption');
         image.src = this._link;
         image.alt = this._name;
-        caption.textContent = this._name;
+        caption.textContent = this._name;*/
         //openPopup(this._picturePopup);
     }
 
@@ -51,7 +53,7 @@ export class Card {
     _setEventListeners() {
         this._likeButton.addEventListener('click', () => this._handleLikeIcon());
         this._deleteButton.addEventListener('click', () => this._deleteElement());
-        this._image.addEventListener('click', () => this._handlePreviewPicture());
+        this._image.addEventListener('click', () => this._handleCardClick(this._name, this._link));
     }
 }
 

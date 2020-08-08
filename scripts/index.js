@@ -41,12 +41,17 @@ const config = {
 }
 
 const containerСardElementsSelector = '.elements';
+//создаем попап с картинкой
+const openPopupWithImage = '.popup-image';
+//const popupImageSelector ='.popup-image__image'
+const popupPicImage = new PopupWithImage(openPopupWithImage);
+popupPicImage.setEventListeners();
 
 const initialCardList = new Section ({
     items: initialCards, 
     
     renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
-      const card = new Card(item.name, item.link, '#element');
+      const card = new Card(item.name, item.link, '#element', (name, link) => {popupPicImage.open(name, link)});
       const cardElement = card.generateCard();
       initialCardList.addItem(cardElement);
       console.log(cardElement)
@@ -68,12 +73,7 @@ const userInfo = new UserInfo({ userName: profileNameSelector, userJob: profileJ
     popupEditProfile.close();
   }*/
 
-//создаем попап с картинкой
-const popupWithImageSelector = '.popup-image';
-//const popupImageSelector ='.popup-image__image'
-const popupPicImage = new PopupWithImage(popupWithImageSelector);
-popupPicImage.open(name, link)
-popupPicImage.setEventListeners();
+
 
 
 // создаем попап редактирования профиля
@@ -81,6 +81,7 @@ popupPicImage.setEventListeners();
 const editProfileForm = document.querySelector('.popup__form_edit-profile');
 //const popupEditProfile = new PopupWithForm(popupEditProfileSelector, editProfileForm);
 //popupEditProfile.setEventListeners();
+
 const popupEditProfile = new PopupWithForm({popupSelector: popupEditProfileSelector, 
     handleFormSubmit: () => {
     const newCard = new Card (name, link, '#element');
@@ -91,9 +92,16 @@ const popupEditProfile = new PopupWithForm({popupSelector: popupEditProfileSelec
 })
 popupEditProfile.setEventListeners();*/
 
-
-
-
+// Добавляем новые карточки
+const popupWithImageSelector = '.popup-image';
+const popupImageSelector = new PopupWithForm({popupSelector: popupWithImageSelector,
+    handleFormSubmit: () => {
+        const newCard = new Card (name, link, '#element');
+        const cardElement = newCard.generateCard();
+        popupImageSelector.close();
+    }
+});
+popupImageSelector.setEventListeners()
 
 const popupProfileValidator = new FormValidator(config, popup);
 const popupElementValidator = new FormValidator(config, popupElement);
@@ -128,11 +136,11 @@ function formSubmitHandler(evt) {
 
 
 //создаем новые карточки
-const renderCard = function ({ name, link }) {
+/*const renderCard = function ({ name, link }) {
     const card = new Card(name, link, '#element');
     const cardElement = card.generateCard();
     elements.prepend(cardElement);
-}
+}*/
 
 const clearInputs = function () {
     titleInput.value = '';
