@@ -93,9 +93,10 @@ const editProfileForm = document.querySelector('.popup__form_edit-profile');
 const popupEditProfile = new PopupWithForm({
     handleFormSubmit: (inputValues) => {
         userProfile.setUserInfo(inputValues.name, inputValues.job);
-        
+
         popupEditProfile.close();
-}}, popupEditProfileSelector)
+    }
+}, popupEditProfileSelector)
 
 
 // Добавляем новые карточки
