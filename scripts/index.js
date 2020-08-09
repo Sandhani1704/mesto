@@ -1,7 +1,6 @@
 import { Card } from './Сard.js';
 import { initialCards } from './cards-init.js';
 import { FormValidator } from './FormValidator.js';
-//import { openPopup, closePopup } from './utils.js';
 import Section from './Section.js';
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
@@ -43,7 +42,7 @@ const config = {
 // Создание экземпляра класса с информацией о пользователе
 const profileNameSelector = '.popup__input_type_name';
 const profileJobSelector = '.popup__input_type_job';
-const userInfo = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });
+const userProfile = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });
 
 const containerСardElementsSelector = '.elements';
 //создаем попап с картинкой
@@ -52,40 +51,37 @@ const openPopupWithImage = '.popup-image';
 const popupPicImage = new PopupWithImage(openPopupWithImage);
 popupPicImage.setEventListeners();
 
-const initialCardList = new Section ({
-    items: initialCards, 
-    
+const initialCardList = new Section({
+    items: initialCards,
+
     renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
-      const card = new Card(item.name, item.link, '#element', (name, link) => {popupPicImage.open(name, link)});
-      const cardElement = card.generateCard();
-      initialCardList.addItem(cardElement);
-      //console.log(cardElement)
+        const card = new Card(item.name, item.link, '#element', (name, link) => { popupPicImage.open(name, link) });
+        const cardElement = card.generateCard();
+        initialCardList.addItem(cardElement);
+        //console.log(cardElement)
     },
-  }, 
-  containerСardElementsSelector
-  );
+},
+    containerСardElementsSelector
+);
 
-  initialCardList.renderItems();  // создание первоначальных карточек
+initialCardList.renderItems();  // создание первоначальных карточек
 
-  // Создание экземпляров попапов всех видов
-   const editFormSubmitHandler = ({ name, job }) => { // сохранение данных, введенных пользователем
-    userInfo.setUserInfo(name, job);
+// Создание экземпляров попапов всех видов
+const editFormSubmitHandler = ({ name, job }) => { // сохранение данных, введенных пользователем
+    userProfile.setUserInfo(name, job);
     popupEditProfile.close();
-  }
-/*const popupEditProfileSelector = '.popup-profile';
-const editProfileForm = document.querySelector('.popup__form_edit-profile');  
-const popupEditProfile = new PopupWithForm(popupEditProfileSelector, editProfileForm, editFormSubmitHandler);
-popupEditProfile.setEventListeners();*/
+}
+
 //cоздание попапа добавления фотографий
 const addPlaceSubmit = ({ name, link }) => { //создание карточек по введенным данным пользователя
     const card = createCard({ name, link });
     initialCardList.addItem(cardElement);
     popupAddPlace.close();
-  }
+}
 const popupAddPlaceSelector = '.popup-element';
-const addPlaceForm = document.querySelector('.popup-element__form'); 
-const popupAddPlace = new PopupWithForm(popupAddPlaceSelector, addPlaceForm, addPlaceSubmit);
-popupAddPlace.setEventListeners();
+const addPlaceForm = document.querySelector('.popup-element__form');
+const popupAddPlace = new PopupWithForm({ addPlaceSubmit }, popupAddPlaceSelector);
+popupAddPlace.close();
 
 
 // создаем попап редактирования профиля
@@ -96,9 +92,11 @@ const editProfileForm = document.querySelector('.popup__form_edit-profile');
 
 const popupEditProfile = new PopupWithForm({
     handleFormSubmit: (inputValues) => {
-        userProfile.setUserInfo(inputValues.name, inputValues.job)
-    } }, popupEditProfileSelector)
-popupEditProfile.setEventListeners();
+        userProfile.setUserInfo(inputValues.name, inputValues.job);
+        
+        popupEditProfile.close();
+}}, popupEditProfileSelector)
+
 
 // Добавляем новые карточки
 /*const popupWithImageSelector = '.popup-image';
@@ -117,7 +115,7 @@ const popupElementValidator = new FormValidator(config, popupElement);
 popupElementValidator.enableValidation();
 popupProfileValidator.enableValidation();
 
-function setPopupDetails() {
+/*function setPopupDetails() {
     nameInput.value = profileUserName.textContent;
     jobInput.value = profileUserJob.textContent;
 }
@@ -125,16 +123,16 @@ function setPopupDetails() {
 function setProfileDetails() {
     profileUserName.textContent = nameInput.value;
     profileUserJob.textContent = jobInput.value;
-}
+}*/
 
-function formSubmitHandler(evt) {
+/*function formSubmitHandler(evt) {
     evt.preventDefault();
 
     setProfileDetails();
 
     closePopup(popup);
 
-} 
+} */
 
 /*    initialCards.forEach(({ name, link }) => {
     const card = new Card(name, link, '#element');
@@ -163,7 +161,7 @@ popupElement.addEventListener('submit', e => {
     const link = linkElementInput.value;
     titleElementInput.value = '';
     linkElementInput.value = '';
-      renderCard({
+    renderCard({
         name: name,
         link: link
     });
@@ -173,11 +171,15 @@ popupElement.addEventListener('submit', e => {
 
 //закрываем попап с изображением
 popupWithImageCloseButton.addEventListener('click', function (event) {
-    closePopup(popupImage);
+    //closePopup(popupImage);
+    popupPicImage.setEventListeners()
 });
 
 popupOpenButton.addEventListener('click', () => {
-    setPopupDetails();
+    //setPopupDetails();
+    nameInput.value = userProfile.getUserInfo().name;
+    jobInput.value = userProfile.getUserInfo().job;
+
     popupProfileValidator.openPopupAndHideErrors();
     popupEditProfile.open()
     //openPopup(popup);
@@ -188,7 +190,7 @@ popupOpenButton.addEventListener('click', () => {
 elementOverlay.addEventListener('click', () => closePopup(popupElement));
 profileOverlay.addEventListener('click', () => closePopup(popup));*/
 
-popupCloseButton.addEventListener('click', () => closePopup(popup));
+popupCloseButton.addEventListener('click', () => popupEditProfile.setEventListeners()); //closePopup(popup)
 
 //formElement.addEventListener('submit', formSubmitHandler);
 
@@ -202,22 +204,6 @@ popupElementAddButton.addEventListener('click', () => {
 
 popupElementCloseButton.addEventListener('click', () => closePopup(popupElement));
 
-//закрываем попапы нажатием на Escape
-/*document.addEventListener('keydown', (evt) => {
-    //const key = event.key;
-    if (evt.key === 'Escape') {
-        if (popupImage.classList.contains('popup_opened')) {
-        togglePopup(popupImage);
-    };
-    if (popupElement.classList.contains('popup_opened')) {
-        togglePopup(popupElement);
-        popupElement.reset()
-    };
-    if (popup.classList.contains('popup_opened')) {
-        togglePopup(popup);
-    };
-    };
-});*/
 
 
 
