@@ -39,17 +39,10 @@ const config = {
 
 }
 
-// Создание экземпляра класса с информацией о пользователе
-const profileNameSelector = '.popup__input_type_name';
-const profileJobSelector = '.popup__input_type_job';
-const userProfile = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });
+
 
 const containerСardElementsSelector = '.elements';
-//создаем попап с картинкой
-const openPopupWithImage = '.popup-image';
-//const popupImageSelector ='.popup-image__image'
-const popupPicImage = new PopupWithImage(openPopupWithImage);
-popupPicImage.setEventListeners();
+
 
 const initialCardList = new Section({
     items: initialCards,
@@ -58,7 +51,7 @@ const initialCardList = new Section({
         const card = new Card(item.name, item.link, '#element', (name, link) => { popupPicImage.open(name, link) });
         const cardElement = card.generateCard();
         initialCardList.addItem(cardElement);
-        //console.log(cardElement)
+        
     },
 },
     containerСardElementsSelector
@@ -78,26 +71,35 @@ const addPlaceSubmit = ({ name, link }) => { //создание карточек
     initialCardList.addItem(cardElement);
     popupAddPlace.close();
 }
-const popupAddPlaceSelector = '.popup-element';
-const addPlaceForm = document.querySelector('.popup-element__form');
-const popupAddPlace = new PopupWithForm({ addPlaceSubmit }, popupAddPlaceSelector);
-popupAddPlace.close();
 
+//cоздаем попап добавления фотографий
+const popupAddPlaceSelector = '.popup-image';
+//const addPlaceForm = document.querySelector('.popup-element__form');
+const popupAddPlace = new PopupWithForm({ handleFormSubmit: ({name, link}) => {
+    const card = generateCard({ name, link });
+    initialCardList.addItem(cardElement);
+} }, popupAddPlaceSelector);
+popupAddPlace.setEventListeners();
+
+
+// Создание экземпляра класса с информацией о пользователе
+const profileNameSelector = '.profile__user';
+const profileJobSelector = '.profile__user-explorer';
+const userProfile = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });
 
 // создаем попап редактирования профиля
 const popupEditProfileSelector = '.popup-profile';
 const editProfileForm = document.querySelector('.popup__form_edit-profile');
-//const popupEditProfile = new PopupWithForm(popupEditProfileSelector, editProfileForm);
-//popupEditProfile.setEventListeners();
 
 const popupEditProfile = new PopupWithForm({
-    handleFormSubmit: (inputValues) => {
-        userProfile.setUserInfo(inputValues.name, inputValues.job);
+    handleFormSubmit: ({name, job}) => {
+        userProfile.setUserInfo({name, job}); //inputValues.name, inputValues.job
 
-        popupEditProfile.close();
+        
     }
 }, popupEditProfileSelector)
 
+popupEditProfile.setEventListeners();
 
 // Добавляем новые карточки
 /*const popupWithImageSelector = '.popup-image';
@@ -126,14 +128,15 @@ function setProfileDetails() {
     profileUserJob.textContent = jobInput.value;
 }*/
 
-/*function formSubmitHandler(evt) {
+function formSubmitHandler(evt) {
     evt.preventDefault();
 
-    setProfileDetails();
+    //setProfileDetails();
 
-    closePopup(popup);
+    //closePopup(popup);
+    popupEditProfile.close()
 
-} */
+} 
 
 /*    initialCards.forEach(({ name, link }) => {
     const card = new Card(name, link, '#element');
@@ -173,17 +176,18 @@ popupElement.addEventListener('submit', e => {
 //закрываем попап с изображением
 popupWithImageCloseButton.addEventListener('click', function (event) {
     //closePopup(popupImage);
-    popupPicImage.setEventListeners()
+    popupAddPlace.setEventListeners()
 });
 
 popupOpenButton.addEventListener('click', () => {
-    //setPopupDetails();
+    
     nameInput.value = userProfile.getUserInfo().name;
+    
     jobInput.value = userProfile.getUserInfo().job;
 
     popupProfileValidator.openPopupAndHideErrors();
     popupEditProfile.open()
-    //openPopup(popup);
+   
 });
 
 //закрываем попапы кликом на оверлей
@@ -193,13 +197,13 @@ profileOverlay.addEventListener('click', () => closePopup(popup));*/
 
 popupCloseButton.addEventListener('click', () => popupEditProfile.setEventListeners()); //closePopup(popup)
 
-//formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', formSubmitHandler);
 
 popupElementAddButton.addEventListener('click', () => {
     clearInputs();
     popupElementValidator.openPopupAndHideErrors();
     //openPopup(popupElement);
-    popupPicImage.open();
+    popupAddPlace.open();
 
 });
 

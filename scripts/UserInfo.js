@@ -1,8 +1,8 @@
 //управление отображением информации о пользователе на странице.
 export default class UserInfo {
     constructor({userName, userJob}) {
-      this._userName = userName;
-      this._userJob = userJob;
+      this._userName = document.querySelector(userName);
+      this._userJob = document.querySelector(userJob);
     }
   
     //возвращает объект с данными пользователя. Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
@@ -14,8 +14,9 @@ export default class UserInfo {
     }
     
   //принимает новые данные пользователя и добавляет их на страницу
-    setUserInfo(name, job) {
+    setUserInfo({name, job}) {
       this._userName.textContent = name;
       this._userJob.textContent = job;
+      
     }
   }
