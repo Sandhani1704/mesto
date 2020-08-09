@@ -1,7 +1,7 @@
 import { Card } from './Сard.js';
 import { initialCards } from './cards-init.js';
 import { FormValidator } from './FormValidator.js';
-import { openPopup, closePopup } from './utils.js';
+//import { openPopup, closePopup } from './utils.js';
 import Section from './Section.js';
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
@@ -40,6 +40,11 @@ const config = {
 
 }
 
+// Создание экземпляра класса с информацией о пользователе
+const profileNameSelector = '.popup__input_type_name';
+const profileJobSelector = '.popup__input_type_job';
+const userInfo = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });
+
 const containerСardElementsSelector = '.elements';
 //создаем попап с картинкой
 const openPopupWithImage = '.popup-image';
@@ -54,7 +59,7 @@ const initialCardList = new Section ({
       const card = new Card(item.name, item.link, '#element', (name, link) => {popupPicImage.open(name, link)});
       const cardElement = card.generateCard();
       initialCardList.addItem(cardElement);
-      console.log(cardElement)
+      //console.log(cardElement)
     },
   }, 
   containerСardElementsSelector
@@ -62,46 +67,49 @@ const initialCardList = new Section ({
 
   initialCardList.renderItems();  // создание первоначальных карточек
 
-// Создание экземпляра класса с информацией о пользователе
-/*const profileNameSelector = '.popup__input_type_name';
-const profileJobSelector = '.popup__input_type_job';
-const userInfo = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });*/
-
-// сохранение данных, введенных пользователем
-/*const editFormSubmitHandler = ({ name, job }) => { 
+  // Создание экземпляров попапов всех видов
+   const editFormSubmitHandler = ({ name, job }) => { // сохранение данных, введенных пользователем
     userInfo.setUserInfo(name, job);
     popupEditProfile.close();
-  }*/
-
-
+  }
+/*const popupEditProfileSelector = '.popup-profile';
+const editProfileForm = document.querySelector('.popup__form_edit-profile');  
+const popupEditProfile = new PopupWithForm(popupEditProfileSelector, editProfileForm, editFormSubmitHandler);
+popupEditProfile.setEventListeners();*/
+//cоздание попапа добавления фотографий
+const addPlaceSubmit = ({ name, link }) => { //создание карточек по введенным данным пользователя
+    const card = createCard({ name, link });
+    initialCardList.addItem(cardElement);
+    popupAddPlace.close();
+  }
+const popupAddPlaceSelector = '.popup-element';
+const addPlaceForm = document.querySelector('.popup-element__form'); 
+const popupAddPlace = new PopupWithForm(popupAddPlaceSelector, addPlaceForm, addPlaceSubmit);
+popupAddPlace.setEventListeners();
 
 
 // создаем попап редактирования профиля
-/*const popupEditProfileSelector = '.popup-profile';
+const popupEditProfileSelector = '.popup-profile';
 const editProfileForm = document.querySelector('.popup__form_edit-profile');
 //const popupEditProfile = new PopupWithForm(popupEditProfileSelector, editProfileForm);
 //popupEditProfile.setEventListeners();
 
-const popupEditProfile = new PopupWithForm({popupSelector: popupEditProfileSelector, 
-    handleFormSubmit: () => {
-    const newCard = new Card (name, link, '#element');
-    const cardElement = newCard.generateCard();
-    popupEditProfile.close();
-}
-
-})
-popupEditProfile.setEventListeners();*/
+const popupEditProfile = new PopupWithForm({
+    handleFormSubmit: (inputValues) => {
+        userProfile.setUserInfo(inputValues.name, inputValues.job)
+    } }, popupEditProfileSelector)
+popupEditProfile.setEventListeners();
 
 // Добавляем новые карточки
-const popupWithImageSelector = '.popup-image';
+/*const popupWithImageSelector = '.popup-image';
 const popupImageSelector = new PopupWithForm({popupSelector: popupWithImageSelector,
-    handleFormSubmit: () => {
-        const newCard = new Card (name, link, '#element');
+    handleFormSubmit: (name, link) => {
+        const newCard = new Card (name, link, '#element', () => {popupImageSelector.close()});
         const cardElement = newCard.generateCard();
         popupImageSelector.close();
     }
 });
-popupImageSelector.setEventListeners()
+popupImageSelector.setEventListeners()*/
 
 const popupProfileValidator = new FormValidator(config, popup);
 const popupElementValidator = new FormValidator(config, popupElement);
@@ -136,11 +144,11 @@ function formSubmitHandler(evt) {
 
 
 //создаем новые карточки
-/*const renderCard = function ({ name, link }) {
+const renderCard = function ({ name, link }) {
     const card = new Card(name, link, '#element');
     const cardElement = card.generateCard();
     elements.prepend(cardElement);
-}*/
+}
 
 const clearInputs = function () {
     titleInput.value = '';
@@ -155,7 +163,7 @@ popupElement.addEventListener('submit', e => {
     const link = linkElementInput.value;
     titleElementInput.value = '';
     linkElementInput.value = '';
-    renderCard({
+      renderCard({
         name: name,
         link: link
     });
@@ -171,13 +179,14 @@ popupWithImageCloseButton.addEventListener('click', function (event) {
 popupOpenButton.addEventListener('click', () => {
     setPopupDetails();
     popupProfileValidator.openPopupAndHideErrors();
-    openPopup(popup);
+    popupEditProfile.open()
+    //openPopup(popup);
 });
 
 //закрываем попапы кликом на оверлей
-imageOverlay.addEventListener('click', () => closePopup(popupImage));
+/*imageOverlay.addEventListener('click', () => closePopup(popupImage));
 elementOverlay.addEventListener('click', () => closePopup(popupElement));
-profileOverlay.addEventListener('click', () => closePopup(popup));
+profileOverlay.addEventListener('click', () => closePopup(popup));*/
 
 popupCloseButton.addEventListener('click', () => closePopup(popup));
 
@@ -186,7 +195,8 @@ popupCloseButton.addEventListener('click', () => closePopup(popup));
 popupElementAddButton.addEventListener('click', () => {
     clearInputs();
     popupElementValidator.openPopupAndHideErrors();
-    openPopup(popupElement);
+    //openPopup(popupElement);
+    popupPicImage.open();
 
 });
 

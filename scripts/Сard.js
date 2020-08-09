@@ -1,4 +1,4 @@
-import { openPopup } from './utils.js';
+//import { openPopup } from './utils.js';
 
 export class Card {
     constructor(name, link, cardTemplate, handleCardClick) {
@@ -29,16 +29,7 @@ export class Card {
 
     }
 
-    _handlePreviewPicture() {
-        
-        /*this._picturePopup = document.querySelector('.popup-image');
-        const image = this._picturePopup.querySelector('.popup-image__image');
-        const caption = this._picturePopup.querySelector('.popup-image__caption');
-        image.src = this._link;
-        image.alt = this._name;
-        caption.textContent = this._name;*/
-        //openPopup(this._picturePopup);
-    }
+     
 
     _handleLikeIcon() {
         this._isLiked = !this._isLiked;

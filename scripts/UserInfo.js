@@ -5,7 +5,7 @@ export default class UserInfo {
       this._userJob = document.querySelector(userJob);
     }
   
-    //возвращает объект с данными пользователя
+    //возвращает объект с данными пользователя. Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
     getUserInfo() {
       const userInfo = {name: this._userName.textContent, job: this._userJob.textContent};
       return userInfo;
