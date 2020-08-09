@@ -73,10 +73,12 @@ const addPlaceSubmit = ({ name, link }) => { //создание карточек
 }
 
 //cоздаем попап добавления фотографий
-const popupAddPlaceSelector = '.popup-image';
+const popupAddPlaceSelector = '.popup-element';
 //const addPlaceForm = document.querySelector('.popup-element__form');
+
 const popupAddPlace = new PopupWithForm({ handleFormSubmit: ({name, link}) => {
-    const card = generateCard({ name, link });
+    const card = new Card( name, link , '#element', (name, link) => { popupPicImage.open(name, link) });
+    const cardElement = card.generateCard();
     initialCardList.addItem(cardElement);
 } }, popupAddPlaceSelector);
 popupAddPlace.setEventListeners();
@@ -85,15 +87,15 @@ popupAddPlace.setEventListeners();
 // Создание экземпляра класса с информацией о пользователе
 const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
-const userProfile = new UserInfo({ userName: profileNameSelector, userJob: profileJobSelector });
+const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector });
 
 // создаем попап редактирования профиля
 const popupEditProfileSelector = '.popup-profile';
 const editProfileForm = document.querySelector('.popup__form_edit-profile');
 
 const popupEditProfile = new PopupWithForm({
-    handleFormSubmit: ({name, job}) => {
-        userProfile.setUserInfo({name, job}); //inputValues.name, inputValues.job
+    handleFormSubmit: ({userJob, userName}) => {
+        userProfile.setUserInfo(userName, userJob); //inputValues.name, inputValues.job
 
         
     }
@@ -128,7 +130,7 @@ function setProfileDetails() {
     profileUserJob.textContent = jobInput.value;
 }*/
 
-function formSubmitHandler(evt) {
+/*function formSubmitHandler(evt) {
     evt.preventDefault();
 
     //setProfileDetails();
@@ -136,7 +138,7 @@ function formSubmitHandler(evt) {
     //closePopup(popup);
     popupEditProfile.close()
 
-} 
+} */
 
 /*    initialCards.forEach(({ name, link }) => {
     const card = new Card(name, link, '#element');
@@ -146,11 +148,11 @@ function formSubmitHandler(evt) {
 
 
 //создаем новые карточки
-const renderCard = function ({ name, link }) {
+/*const renderCard = function ({ name, link }) {
     const card = new Card(name, link, '#element');
     const cardElement = card.generateCard();
     elements.prepend(cardElement);
-}
+}*/
 
 const clearInputs = function () {
     titleInput.value = '';
@@ -159,7 +161,7 @@ const clearInputs = function () {
 
 
 //добавляем карточки на страницу
-popupElement.addEventListener('submit', e => {
+/*popupElement.addEventListener('submit', e => {
     e.preventDefault();
     const name = titleElementInput.value;
     const link = linkElementInput.value;
@@ -171,7 +173,7 @@ popupElement.addEventListener('submit', e => {
     });
 
     closePopup(popupElement);
-});
+}); */
 
 //закрываем попап с изображением
 popupWithImageCloseButton.addEventListener('click', function (event) {
@@ -197,7 +199,7 @@ profileOverlay.addEventListener('click', () => closePopup(popup));*/
 
 popupCloseButton.addEventListener('click', () => popupEditProfile.setEventListeners()); //closePopup(popup)
 
-formElement.addEventListener('submit', formSubmitHandler);
+//formElement.addEventListener('submit', formSubmitHandler);
 
 popupElementAddButton.addEventListener('click', () => {
     clearInputs();
