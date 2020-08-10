@@ -1,10 +1,10 @@
-import { Card } from './Сard.js';
-import { initialCards } from './cards-init.js';
-import { FormValidator } from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithForm from './PopupWithForm.js';
-import PopupWithImage from './PopupWithImage.js';
-import UserInfo from './UserInfo.js';
+import { Card } from '../scripts/components/Сard.js';
+import { initialCards } from '../scripts/cards-init.js';
+import { FormValidator } from '../scripts/components/FormValidator.js';
+import Section from '../scripts/components/Section.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import UserInfo from '../scripts/components/UserInfo.js';
 
 const popup = document.querySelector('.popup-profile');
 const popupOpenButton = document.querySelector('.profile__button-edit');
@@ -38,8 +38,10 @@ const config = {
     errorClass: 'popup__input-error_active'
 
 }
-
-
+//открываем попап с изображением
+const openPopupWithImage = '.popup-image';
+const popupPicImage = new PopupWithImage(openPopupWithImage);
+popupPicImage.setEventListeners();
 
 const containerСardElementsSelector = '.elements';
 
@@ -77,9 +79,10 @@ const popupAddPlaceSelector = '.popup-element';
 //const addPlaceForm = document.querySelector('.popup-element__form');
 
 const popupAddPlace = new PopupWithForm({ handleFormSubmit: ({name, link}) => {
-    const card = new Card( name, link , '#element', (name, link) => { popupPicImage.open(name, link) });
+    const card = new Card(name, link , '#element', (name, link) => { popupPicImage.open(name, link) });
     const cardElement = card.generateCard();
     initialCardList.addItem(cardElement);
+    //elements.prepend(cardElement)
 } }, popupAddPlaceSelector);
 popupAddPlace.setEventListeners();
 
@@ -154,10 +157,10 @@ function setProfileDetails() {
     elements.prepend(cardElement);
 }*/
 
-const clearInputs = function () {
+/*const clearInputs = function () {
     titleInput.value = '';
     linkInput.value = '';
-}
+}*/
 
 
 //добавляем карточки на страницу
@@ -176,10 +179,9 @@ const clearInputs = function () {
 }); */
 
 //закрываем попап с изображением
-popupWithImageCloseButton.addEventListener('click', function (event) {
-    //closePopup(popupImage);
+/*popupWithImageCloseButton.addEventListener('click', function (event) {
     popupAddPlace.setEventListeners()
-});
+});*/
 
 popupOpenButton.addEventListener('click', () => {
     
@@ -192,24 +194,20 @@ popupOpenButton.addEventListener('click', () => {
    
 });
 
-//закрываем попапы кликом на оверлей
-/*imageOverlay.addEventListener('click', () => closePopup(popupImage));
-elementOverlay.addEventListener('click', () => closePopup(popupElement));
-profileOverlay.addEventListener('click', () => closePopup(popup));*/
 
-popupCloseButton.addEventListener('click', () => popupEditProfile.setEventListeners()); //closePopup(popup)
+//popupCloseButton.addEventListener('click', () => popupEditProfile.setEventListeners()); //closePopup(popup)
 
 //formElement.addEventListener('submit', formSubmitHandler);
 
 popupElementAddButton.addEventListener('click', () => {
-    clearInputs();
+    //clearInputs();
     popupElementValidator.openPopupAndHideErrors();
-    //openPopup(popupElement);
+    
     popupAddPlace.open();
 
 });
 
-popupElementCloseButton.addEventListener('click', () => closePopup(popupElement));
+//popupElementCloseButton.addEventListener('click', () => closePopup(popupElement));
 
 
 

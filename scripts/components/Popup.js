@@ -1,8 +1,6 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    //this._popupCloseButton = this._popupSelector.querySelector(popupCloseButton);
-
   }
 
   open() {
@@ -29,12 +27,6 @@ export default class Popup {
       this.close();
     });
   }
-  //закрываем попапы кликом на оверлей
-  _handleOverlayClose = () => {
-    if (event.target.classList.contains('popup_opened')) {
-      this.close();
-    }
-  };
 }
 
 

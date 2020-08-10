@@ -12,7 +12,7 @@ export class Card {
     _getTemplate() {
         const cardElement = document.querySelector(this._cardTemplate).content.cloneNode(true);
         return cardElement
-    } 
+    }
 
     generateCard() {
         this._element = this._getTemplate();
@@ -29,7 +29,7 @@ export class Card {
 
     }
 
-     
+
 
     _handleLikeIcon() {
         this._isLiked = !this._isLiked;
