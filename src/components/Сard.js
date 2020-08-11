@@ -1,5 +1,3 @@
-//import { openPopup } from './utils.js';
-
 export class Card {
     constructor(name, link, cardTemplate, handleCardClick) {
         this._name = name;
@@ -28,8 +26,6 @@ export class Card {
         return this._element;
 
     }
-
-
 
     _handleLikeIcon() {
         this._isLiked = !this._isLiked;
