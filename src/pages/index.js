@@ -1,15 +1,34 @@
 import { Card } from '../components/Сard.js';
-import {
-    initialCards, popup, popupOpenButton, nameInput, jobInput, popupElementAddButton,
-    popupElement, popupEditProfileSelector, config, openPopupWithImage, containerСardElementsSelector,
-    popupAddPlaceSelector, profileNameSelector, profileJobSelector
-} from '../utils/constants.js';
+import { initialCards } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import './index.css';
+
+const popup = document.querySelector('.popup-profile');
+const popupOpenButton = document.querySelector('.profile__button-edit');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_job');
+const popupElementAddButton = document.querySelector('.profile__button-add');
+const popupElement = document.querySelector('.popup-element');
+const popupEditProfileSelector = '.popup-profile';
+
+const config = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active'
+}
+
+const openPopupWithImage = '.popup-image';
+const containerCardElementsSelector = '.elements';
+const popupAddPlaceSelector = '.popup-element';
+const profileNameSelector = '.profile__user';
+const profileJobSelector = '.profile__user-explorer';
 
 //открываем попап с изображением
 const popupPicImage = new PopupWithImage(openPopupWithImage);
@@ -26,7 +45,7 @@ const initialCardList = new Section({
 
     },
 },
-    containerСardElementsSelector
+    containerCardElementsSelector
 );
 
 initialCardList.renderItems();  // создание первоначальных карточек
@@ -62,10 +81,10 @@ popupProfileValidator.enableValidation();
 
 
 popupOpenButton.addEventListener('click', () => {
+    const profileInfo = userProfile.getUserInfo();
 
-    nameInput.value = userProfile.getUserInfo().name;
-
-    jobInput.value = userProfile.getUserInfo().job;
+    nameInput.value = profileInfo.name;
+    jobInput.value = profileInfo.job;
 
     popupProfileValidator.openPopupAndHideErrors();
     popupEditProfile.open()

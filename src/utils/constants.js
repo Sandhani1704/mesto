@@ -25,25 +25,4 @@ export const initialCards = [
     }
 ];
 
-export const popup = document.querySelector('.popup-profile');
-export const popupOpenButton = document.querySelector('.profile__button-edit');
-export const nameInput = document.querySelector('.popup__input_type_name');
-export const jobInput = document.querySelector('.popup__input_type_job');
-export const popupElementAddButton = document.querySelector('.profile__button-add');
-export const popupElement = document.querySelector('.popup-element');
-export const popupEditProfileSelector = '.popup-profile';
 
-export const config = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
-}
-
-export const openPopupWithImage = '.popup-image';
-export const containerСardElementsSelector = '.elements';
-export const popupAddPlaceSelector = '.popup-element';
-export const profileNameSelector = '.profile__user';
-export const profileJobSelector = '.profile__user-explorer';
