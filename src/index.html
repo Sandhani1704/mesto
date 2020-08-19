@@ -76,13 +76,43 @@
             </div>
         </section>
 
+        <!--Аватар пользователя-->
+
+        <section class="popup popup-avatar">
+            <div class="popup__overlay popup-avatar__overlay"></div>
+            <div class="popup__container popup-avatar__container">
+                <button type="button" class="popup__close popup-avatar__close"><img class="popup__close-icon popup-avatar__close-icon" src="./images/Close_Icon.svg" alt="закрыть"></button>
+                <h3 class="popup__title popup-avatar__title">Обновить аватар</h3>
+                <form class="popup__form popup-avatar__form" name="new-avatar" novalidate>
+                    <input id="url-input" type="url" name="link" class="popup__input popup-avatar__input_type_link-img" required placeholder="Ссылка на картинку">
+                    <span id="url-input-error" class="popup__input-error"></span>
+                    <button type="submit" class="popup__button popup-avatar__button" disabled>Сохранить</button>
+                </form>
+            </div>
+        </section>
+
+        <!--подтвердить удаление карточки-->
+        <section class="popup popup-delete">
+            <div class="popup__overlay popup-delete__overlay"></div>
+            <div class="popup__container popup-delete__container">
+                <button type="button" class="popup__close popup-delete__close"><img class="popup__close-icon popup-delete__close-icon" src="./images/Close_Icon.svg" alt="закрыть"></button>
+                <h3 class="popup__title popup-delete__title">Вы уверены?</h3>
+                <form class="popup__form popup-delete__form">
+                    <button type="submit" class="popup__button popup-delete__button">Да</button>
+                </form>
+            </div>
+        </section>
+
         <template id="element">
             <div class="elements__card">
                 <button type="button" class="elements__remove-button"></button>
                 <img src="#" alt="" class="elements__card-image">
                 <div class="elements__card-description">
-                    <p class="elements__card-name"></p>
+                    <p class="elements__card-name"></p>-->
+                    <div class="elements__like-container">
                     <button type="button" class="elements__card-icon"></button>
+                    <p class="elements__like-count">0</p>
+                    </div>
                 </div>
             </div>
         </template>

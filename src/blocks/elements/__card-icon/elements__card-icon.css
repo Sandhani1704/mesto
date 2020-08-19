@@ -4,11 +4,10 @@
     border: none;
     width: 21px;
     height: 19px;
-    margin-top: 31px;
-    margin-right: 20px;
     outline: none;
     border: none;
-    cursor: pointer;
+    cursor: pointer; 
+    background-position: 50%;
     }
     
     .elements__card-icon:hover {
