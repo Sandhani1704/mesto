@@ -4,9 +4,9 @@
 @import url(./__card-name/elements__card-name.css);
 @import url(./__card/elements__card.css);
 @import url(./__remove-button/elements__remove-button.css);
+@import url(./__card-icon/elements__card-icon.css);
 @import url(./__card-icon/_active/elements__card-icon_active.css);
 @import url(./__like-count/elements__like-count.css);
-@import url(./__card-icon/elements__card-icon.css);
 
 .elements {
     display: grid;
