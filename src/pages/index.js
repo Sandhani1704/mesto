@@ -16,8 +16,9 @@ const jobInput = document.querySelector('.popup__input_type_job');
 const popupElementAddButton = document.querySelector('.profile__button-add');
 const popupElement = document.querySelector('.popup-element');
 const popupEditProfileSelector = '.popup-profile';
+const popupAvatarProfileSelector = '.popup-avatar';
 const avatarFormButton = document.querySelector('.profile__avatar-button');
-const popupWithAvatar = document.querySelector('.popup-avatar');
+const avatarImage = document.querySelector('.profile__avatar');
 
 const config = {
     formSelector: '.popup__form',
@@ -38,24 +39,58 @@ const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
     headers: {
     'Content-Type': 'application/json',
-    token: 'dcc653ba-edf0-4729-b4ae-297882170223'
+    authorization: '401963c2-8e67-4398-84ba-2d7df4f163fe'
 }
 });
   
   api.getInitialCards()
   .then((result) => {
-    console.log(result);
+    const initialCardList = new Section({
+        //items: initialCards,
+        items: result,
+        renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
+            const card = new Card(item.name, item.link, '#element', (name, link) => { popupPicImage.open(name, link) });
+            const cardElement = card.generateCard();
+            initialCardList.addItem(cardElement);
+    
+        },
+    },
+        containerCardElementsSelector
+    );
+    initialCardList.renderItems();//подгружаем начальный массив с фотографиями
+
+    //cоздаем попап добавления фотографий
+const popupAddPlace = new PopupWithForm({
+    handleFormSubmit: ({ name, link }) => {
+        const card = new Card(name, link, '#element', (name, link) => { popupPicImage.open(name, link) });
+        const cardElement = card.generateCard();
+        initialCardList.addItem(cardElement);
+        //elements.prepend(cardElement)
+    }
+}, popupAddPlaceSelector);
+//слушатель попапа добавления фотографий
+popupAddPlace.setEventListeners();
+popupElementAddButton.addEventListener('click', () => {
+
+    popupElementValidator.openPopupAndHideErrors();
+
+    popupAddPlace.open();
+
+});
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   });
+
+//создаем попап с аватар
+
 
 //открываем попап с изображением
 const popupPicImage = new PopupWithImage(openPopupWithImage);
 popupPicImage.setEventListeners();
 
 
-const initialCardList = new Section({
+/*const initialCardList = new Section({
     items: initialCards,
 
     renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
@@ -66,12 +101,12 @@ const initialCardList = new Section({
     },
 },
     containerCardElementsSelector
-);
+);*/
 
-initialCardList.renderItems();  // создание первоначальных карточек
+//initialCardList.renderItems();  // создание первоначальных карточек
 
 //cоздаем попап добавления фотографий
-const popupAddPlace = new PopupWithForm({
+/*const popupAddPlace = new PopupWithForm({
     handleFormSubmit: ({ name, link }) => {
         const card = new Card(name, link, '#element', (name, link) => { popupPicImage.open(name, link) });
         const cardElement = card.generateCard();
@@ -79,7 +114,7 @@ const popupAddPlace = new PopupWithForm({
         //elements.prepend(cardElement)
     }
 }, popupAddPlaceSelector);
-popupAddPlace.setEventListeners();
+popupAddPlace.setEventListeners();*/
 
 // Создание экземпляра класса с информацией о пользователе
 const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector });
@@ -92,6 +127,22 @@ const popupEditProfile = new PopupWithForm({
 }, popupEditProfileSelector)
 
 popupEditProfile.setEventListeners();
+
+// создаем попап изменения аватара профиля
+const popupAvatar = new PopupWithForm({
+    handleFormSubmit: (inputValues) => {
+        
+        api.setUserAvatar(inputValues)
+          .then((res) => {
+            
+            avatarImage.src = res.avatar;
+          })
+          .catch(err => console.log(err))
+      }
+}, popupAvatarProfileSelector)
+
+popupAvatar.setEventListeners();
+
 
 const popupProfileValidator = new FormValidator(config, popup);
 const popupElementValidator = new FormValidator(config, popupElement);
@@ -112,17 +163,17 @@ popupOpenButton.addEventListener('click', () => {
 });
 
 
-popupElementAddButton.addEventListener('click', () => {
+/*popupElementAddButton.addEventListener('click', () => {
 
     popupElementValidator.openPopupAndHideErrors();
 
     popupAddPlace.open();
 
-});
+});*/
 
 avatarFormButton.addEventListener('click', () => {
-    //popupWithAvatar.open();
-    popupWithAvatar.classList.add('popup_opened');
+    popupAvatar.open();
+    
   })
 
 

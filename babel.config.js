@@ -18,6 +18,11 @@ const presets = [
       corejs: '^3.6.5',
     },
   ],
+  {
+    "plugins": [
+    ["transform-class-properties", { "spec": true }]
+  ]
+}
 ];
 
 

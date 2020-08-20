@@ -1,5 +1,5 @@
 export const initialCards = [
-    {
+    /*{
         name: 'Новая Зеландия',
         link: 'https://vedgard.com/sites/default/files/%D0%9C%D0%BE%D0%B8%20%D1%84%D0%BE%D1%82%D0%BE%20-%201568/%D0%A4%D0%BE%D1%82%D0%BE%20%D0%B2%20%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8F%D1%85/4077-7537.jpg'
     },
@@ -22,7 +22,7 @@ export const initialCards = [
     {
         name: 'Италия',
         link: 'https://avatars.mds.yandex.net/get-zen_doc/1860332/pub_5e1d661fd7859b00b4e69bb1_5e1d674bcddb7100b16e7fef/scale_1200'
-    }
+    }*/
 ];
 
 
