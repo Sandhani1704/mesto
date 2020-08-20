@@ -5,7 +5,9 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import './index.css';
+
 
 const popup = document.querySelector('.popup-profile');
 const popupOpenButton = document.querySelector('.profile__button-edit');
@@ -14,6 +16,8 @@ const jobInput = document.querySelector('.popup__input_type_job');
 const popupElementAddButton = document.querySelector('.profile__button-add');
 const popupElement = document.querySelector('.popup-element');
 const popupEditProfileSelector = '.popup-profile';
+const avatarFormButton = document.querySelector('.profile__avatar-button');
+const popupWithAvatar = document.querySelector('.popup-avatar');
 
 const config = {
     formSelector: '.popup__form',
@@ -29,6 +33,22 @@ const containerCardElementsSelector = '.elements';
 const popupAddPlaceSelector = '.popup-element';
 const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
+
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+    headers: {
+    'Content-Type': 'application/json',
+    token: 'dcc653ba-edf0-4729-b4ae-297882170223'
+}
+});
+  
+  api.getInitialCards()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
 //открываем попап с изображением
 const popupPicImage = new PopupWithImage(openPopupWithImage);
@@ -99,6 +119,11 @@ popupElementAddButton.addEventListener('click', () => {
     popupAddPlace.open();
 
 });
+
+avatarFormButton.addEventListener('click', () => {
+    //popupWithAvatar.open();
+    popupWithAvatar.classList.add('popup_opened');
+  })
 
 
 
