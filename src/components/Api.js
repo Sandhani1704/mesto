@@ -53,4 +53,18 @@ export default class Api {
         })
           .then(this._handleResponse)
       }
+
+      addCard({ name, link, alt }) {
+        //renderLoading(true);
+        return fetch(`${this._baseUrl}/cards`, {
+          method: 'POST',
+          headers: this._headers,
+          body: JSON.stringify({
+            name,
+            link,
+            alt
+          })
+        })
+          .then(this._handleResponse)
+      }
 }

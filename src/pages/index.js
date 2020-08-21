@@ -16,7 +16,8 @@ const jobInput = document.querySelector('.popup__input_type_job');
 const popupElementAddButton = document.querySelector('.profile__button-add');
 const popupElement = document.querySelector('.popup-element');
 const popupEditProfileSelector = '.popup-profile';
-const popupAvatarProfileSelector = '.popup-avatar';
+const avatarProfileSelector = '.profile__avatar';
+const popupAvatarProfileSelector ='.popup-avatar';
 const avatarFormButton = document.querySelector('.profile__avatar-button');
 const avatarImage = document.querySelector('.profile__avatar');
 const popupAvatarElement = document.querySelector('.popup-avatar');
@@ -36,8 +37,9 @@ const popupAddPlaceSelector = '.popup-element';
 const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
 
+
 // Создание экземпляра класса с информацией о пользователе
-const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector });
+const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector, userAvatar: avatarProfileSelector });
 
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
@@ -49,8 +51,15 @@ const api = new Api({
 
 api.getUserInfo()
 .then((result) => {
-    userProfile.setUserInfo(result.name, result.about);
+    userProfile.setUserInfo(result.name, result.about, result.avatar);
 })
+
+
+
+/*api.setUserAvatar()
+.then((result) => {
+    userProfile.setUserAvatar(result.link);
+})*/
   
   api.getInitialCards()
   .then((result) => {
@@ -71,12 +80,17 @@ api.getUserInfo()
     //cоздаем попап добавления фотографий
 const popupAddPlace = new PopupWithForm({
     handleFormSubmit: ({ name, link }) => {
+        api.addCard({ name, link })
+        .then(({name, link}) => {
         const card = new Card(name, link, '#element', (name, link) => { popupPicImage.open(name, link) });
         const cardElement = card.generateCard();
         initialCardList.addItem(cardElement);
         //elements.prepend(cardElement)
+    })
+    .catch((error) => console.error(error))
     }
 }, popupAddPlaceSelector);
+
 //слушатель попапа добавления фотографий
 popupAddPlace.setEventListeners();
 popupElementAddButton.addEventListener('click', () => {
@@ -157,6 +171,10 @@ const popupAvatar = new PopupWithForm({
 
 popupAvatar.setEventListeners();
 
+api.getUserInfo()
+.then((result) => {
+    userProfile.setUserAvatar(result.avatar);
+})
 
 const popupProfileValidator = new FormValidator(config, popup);
 const popupElementValidator = new FormValidator(config, popupElement);

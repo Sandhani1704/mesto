@@ -11,7 +11,7 @@ export default class UserInfo {
     this._userProfileData = {};
     this._userProfileData.name = this._userNameElement.textContent;
     this._userProfileData.job = this._userJobElement.textContent;
-    //this._userProfileData.src = this._userAvatar.src;
+    //this._userProfileData.link = this._userAvatar.src;
     return this._userProfileData;
   }
 
@@ -19,7 +19,11 @@ export default class UserInfo {
   setUserInfo(name, job) {
     this._userNameElement.textContent = name;
     this._userJobElement.textContent = job;
-    //this._userAvatar.src = userAvatar;
+    //this._userAvatar.src = link;
 
   }
+
+  setUserAvatar(src) {
+    this._userAvatar.src = src;
+}
 }
