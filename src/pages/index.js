@@ -19,6 +19,7 @@ const popupEditProfileSelector = '.popup-profile';
 const popupAvatarProfileSelector = '.popup-avatar';
 const avatarFormButton = document.querySelector('.profile__avatar-button');
 const avatarImage = document.querySelector('.profile__avatar');
+const popupAvatarElement = document.querySelector('.popup-avatar');
 
 const config = {
     formSelector: '.popup__form',
@@ -35,6 +36,9 @@ const popupAddPlaceSelector = '.popup-element';
 const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
 
+// Создание экземпляра класса с информацией о пользователе
+const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector });
+
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
     headers: {
@@ -42,6 +46,11 @@ const api = new Api({
     authorization: '401963c2-8e67-4398-84ba-2d7df4f163fe'
 }
 });
+
+api.getUserInfo()
+.then((result) => {
+    userProfile.setUserInfo(result.name, result.about);
+})
   
   api.getInitialCards()
   .then((result) => {
@@ -82,9 +91,6 @@ popupElementAddButton.addEventListener('click', () => {
     console.log(err); // выведем ошибку в консоль
   });
 
-//создаем попап с аватар
-
-
 //открываем попап с изображением
 const popupPicImage = new PopupWithImage(openPopupWithImage);
 popupPicImage.setEventListeners();
@@ -116,13 +122,21 @@ popupPicImage.setEventListeners();
 }, popupAddPlaceSelector);
 popupAddPlace.setEventListeners();*/
 
-// Создание экземпляра класса с информацией о пользователе
-const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector });
+
 
 // создаем попап редактирования профиля
 const popupEditProfile = new PopupWithForm({
-    handleFormSubmit: ({ userJob, userName }) => {
-        userProfile.setUserInfo(userName, userJob); //inputValues.name, inputValues.job
+    handleFormSubmit: ({userJob, userName}) => {
+        api.setUserInfo ({
+            name: userName,
+            about: userJob
+        })
+          .then((result) => {
+            userProfile.setUserInfo(result.name, result.about)
+               
+        })
+          .catch((error) => console.error(error))
+        //userProfile.setUserInfo(userName, userJob); //inputValues.name, inputValues.job
     }
 }, popupEditProfileSelector)
 
@@ -130,9 +144,9 @@ popupEditProfile.setEventListeners();
 
 // создаем попап изменения аватара профиля
 const popupAvatar = new PopupWithForm({
-    handleFormSubmit: (inputValues) => {
+    handleFormSubmit: ({link}) => {
         
-        api.setUserAvatar(inputValues)
+        api.setUserAvatar({avatar: link})
           .then((res) => {
             
             avatarImage.src = res.avatar;
@@ -146,10 +160,10 @@ popupAvatar.setEventListeners();
 
 const popupProfileValidator = new FormValidator(config, popup);
 const popupElementValidator = new FormValidator(config, popupElement);
-
+const popupAvatarValidator = new FormValidator(config, popupAvatarElement);
 popupElementValidator.enableValidation();
 popupProfileValidator.enableValidation();
-
+popupAvatarValidator.enableValidation();
 
 popupOpenButton.addEventListener('click', () => {
     const profileInfo = userProfile.getUserInfo();

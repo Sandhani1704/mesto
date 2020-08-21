@@ -12,6 +12,26 @@ export default class Api {
         }
       }
 
+      getUserInfo() {
+        return fetch(`${this._baseUrl}/users/me`, {
+          headers: this._headers
+        })
+          .then(this._handleResponse)
+      }
+
+      setUserInfo( {name, about} ) {
+        //renderLoading(true);
+        return fetch(`${this._baseUrl}/users/me`, {
+          method: 'PATCH',
+          headers: this._headers,
+          body: JSON.stringify({
+            name,
+            about
+          })
+        })
+          .then(this._handleResponse)
+      }
+
       getInitialCards() {
         return fetch(`${this._baseUrl}/cards`, {
           //method: 'GET',
@@ -22,13 +42,13 @@ export default class Api {
 
       
 
-      setUserAvatar(inputValue) {
+      setUserAvatar({ avatar }) {
             
         return fetch(`${this._baseUrl}/users/me/avatar`, {
           method: 'PATCH',
           headers: this._headers,
           body: JSON.stringify({
-          avatar: inputValue.avatar
+            avatar
           })
         })
           .then(this._handleResponse)
