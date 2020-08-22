@@ -10,6 +10,10 @@ export default class Section {
   }
   // вставляем element методом append в поле _container
   addItem(element) {
+    this._container.prepend(element);
+  }
+
+  setItem(element) {
     this._container.append(element);
   }
 

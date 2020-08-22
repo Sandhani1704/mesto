@@ -67,25 +67,30 @@ api.getUserInfo()
         //items: initialCards,
         items: result,
         renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
-            const card = new Card(item.name, item.link, '#element', (name, link) => { popupPicImage.open(name, link) });
+            const card = new Card({data: item, handleCardClick:  (name, link) => { popupPicImage.open(name, link) } /*handleLikeClick: (card) => {
+                
+              }
+              /*handleDeleteButtonClick: (card) => {
+                
+            }*/}, '#element');
             const cardElement = card.generateCard();
-            initialCardList.addItem(cardElement);
+            initialCardList.setItem(cardElement);
     
         },
     },
         containerCardElementsSelector
     );
-    initialCardList.renderItems();//подгружаем начальный массив с фотографиями
+    initialCardList.renderItems();//подгружаем начальный массив с фотографиямиnp
 
     //cоздаем попап добавления фотографий
 const popupAddPlace = new PopupWithForm({
     handleFormSubmit: ({ name, link }) => {
         api.addCard({ name, link })
         .then(({name, link}) => {
-        const card = new Card(name, link, '#element', (name, link) => { popupPicImage.open(name, link) });
+        const card = new Card(data, '#element', (name, link) => { popupPicImage.open(name, link) });
         const cardElement = card.generateCard();
         initialCardList.addItem(cardElement);
-        //elements.prepend(cardElement)
+        
     })
     .catch((error) => console.error(error))
     }
