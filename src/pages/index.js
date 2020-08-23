@@ -39,10 +39,17 @@ const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
 
 const popupConfirm = new PopupWithConfirm('.popup-delete');
+popupConfirm.setEventListeners();
+
+//открываем попап с изображением
+const popupPicImage = new PopupWithImage(openPopupWithImage);
+popupPicImage.setEventListeners();
 
 // Создание экземпляра класса с информацией о пользователе
-const userProfile = new UserInfo({ userNameSelector: profileNameSelector, 
-userJobSelector: profileJobSelector, userAvatar: avatarProfileSelector });
+const userProfile = new UserInfo({
+    userNameSelector: profileNameSelector,
+    userJobSelector: profileJobSelector, userAvatar: avatarProfileSelector
+});
 //const userId = userProfile.getUserId();
 
 const api = new Api({
@@ -52,17 +59,45 @@ const api = new Api({
         authorization: '401963c2-8e67-4398-84ba-2d7df4f163fe'
     }
 });
-let myId = null
+
 api.getUserInfo()
     .then((result) => {
         userProfile.setUserInfo(result.name, result.about, result._id);
-        //const myId = result._id;
+
         //console.log(myId)
     })
-    
-    
-    
 
+let globalHandleCardClick = (data) => {
+    popupPicImage.open(data)
+}
+let globalHandleLikeCardClick = (card) => {
+    if (card.isLiked()) {
+        api.removeLike(card.id())
+            .then((data) => {
+                card.setLikesInfo(data)
+            })
+    } else {
+        api.putLike(card.id())
+            .then((data) => {
+                card.setLikesInfo(data)
+            })
+    }
+}
+let globalHandleDeleteCardClick = (card) => {
+    popupConfirm.open();
+    popupConfirm.handleButton(() => {
+        api.deleteCard(card.id())
+            .then((data) => {
+                card.deleteElement(data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                popupConfirm.close();
+            })
+    })
+}
 
 api.getInitialCards()
     .then((result) => {
@@ -72,29 +107,10 @@ api.getInitialCards()
             renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
                 const card = new Card({
                     data: item,
-                    handleCardClick: (data) => { popupPicImage.open(data) },
-                    handleLikeClick: (card) => { 
-                        api.putLike(card.id())
-                            .then((data) => {
-                                card.setLikesInfo(data)
-                            })
-                    },
-                    handleDeleteButtonClick: (card) => {
-                        popupConfirm.open();
-                        popupConfirm.handleButton(() => {
-                        api.deleteCard(card.id())
-                            .then((data) => {
-                                card.deleteElement(data)
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                              })
-                              .finally(() => {
-                                popupConfirm.close();
-                              })
-                        })
-                    }
-                }, userProfile(), '#element');
+                    handleCardClick: globalHandleCardClick,
+                    handleLikeClick: globalHandleLikeCardClick,
+                    handleDeleteButtonClick: globalHandleDeleteCardClick
+                }, userProfile.getUserId(), '#element');
                 const cardElement = card.generateCard();
                 initialCardList.setItem(cardElement);
 
@@ -113,21 +129,10 @@ api.getInitialCards()
                         //const card = new Card(data, '#element', (name, link) => { popupPicImage.open(name, link) });
                         const card = new Card({
                             data: item,
-                            handleCardClick: (data) => { popupPicImage.open(data) },
-                            handleLikeClick: (card) => {
-                                api.putLike(card.id())
-                                    .then((data) => {
-                                        card.setLikesInfo(data)
-                                    })
-                            },
-                            handleDeleteButtonClick: (card) => {
-                                api.deleteCard(card.id())
-                                    .then((data) => {
-                                        card.deleteElement(data)
-                                    })
-
-                            }
-                        }, userProfile(),'#element');
+                            handleCardClick: globalHandleCardClick,
+                            handleLikeClick: globalHandleLikeCardClick,
+                            handleDeleteButtonClick: globalHandleDeleteCardClick
+                        }, userProfile.getUserId(), '#element');
                         const cardElement = card.generateCard();
                         initialCardList.addItem(cardElement);
 
@@ -150,9 +155,7 @@ api.getInitialCards()
         console.log(err); // выведем ошибку в консоль
     });
 
-//открываем попап с изображением
-const popupPicImage = new PopupWithImage(openPopupWithImage);
-popupPicImage.setEventListeners();
+
 
 
 /*const initialCardList = new Section({

@@ -7,8 +7,8 @@ export default class PopupWithConfirm extends Popup {
     this._popupWithConfirm = this._popupWithConfirm.bind(this);
   }
 
-  handleButton(removeCard) {
-    this._handleSubmit = removeCard;
+  handleButton(configmedHandler) {
+    this._handleSubmit = configmedHandler;
   }
 
   _popupWithConfirm(evt) {
