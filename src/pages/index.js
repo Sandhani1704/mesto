@@ -6,6 +6,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import './index.css';
 
 
@@ -37,7 +38,7 @@ const popupAddPlaceSelector = '.popup-element';
 const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
 
-
+const popupConfirm = new PopupWithConfirm('.popup-delete');
 // Создание экземпляра класса с информацией о пользователе
 const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector, userAvatar: avatarProfileSelector });
 
@@ -69,7 +70,7 @@ api.getInitialCards()
             renderer: (item) => {  // { name, link } //функция, которая отвечает за создание и отрисовку данных на странице
                 const card = new Card({
                     data: item,
-                    handleCardClick: (name, link) => { popupPicImage.open(name, link) },
+                    handleCardClick: (data) => { popupPicImage.open(data) },
                     handleLikeClick: (card) => { 
                         api.putLike(card.id())
                             .then((data) => {
@@ -77,11 +78,19 @@ api.getInitialCards()
                             })
                     },
                     handleDeleteButtonClick: (card) => {
-                        api.deleteCard()
+                        popupConfirm.open();
+                        popupConfirm.handleButton(() => {
+                        api.deleteCard(card.id())
                             .then((data) => {
                                 card.deleteElement(data)
                             })
-
+                            .catch((err) => {
+                                console.log(err);
+                              })
+                              .finally(() => {
+                                popupConfirm.close();
+                              })
+                        })
                     }
                 }, '#element');
                 const cardElement = card.generateCard();
@@ -96,12 +105,13 @@ api.getInitialCards()
         //cоздаем попап добавления фотографий
         const popupAddPlace = new PopupWithForm({
             handleFormSubmit: (item) => {
+                popupAddPlace.loading(true);
                 api.addCard(item)
                     .then((item) => {
                         //const card = new Card(data, '#element', (name, link) => { popupPicImage.open(name, link) });
                         const card = new Card({
                             data: item,
-                            handleCardClick: (name, link) => { popupPicImage.open(name, link) },
+                            handleCardClick: (data) => { popupPicImage.open(data) },
                             handleLikeClick: (card) => {
                                 api.putLike(card.id())
                                     .then((data) => {
@@ -109,7 +119,7 @@ api.getInitialCards()
                                     })
                             },
                             handleDeleteButtonClick: (card) => {
-                                api.deleteCard()
+                                api.deleteCard(card.id())
                                     .then((data) => {
                                         card.deleteElement(data)
                                     })
@@ -174,6 +184,7 @@ popupAddPlace.setEventListeners();*/
 // создаем попап редактирования профиля
 const popupEditProfile = new PopupWithForm({
     handleFormSubmit: ({ userJob, userName }) => {
+        popupEditProfile.loading(true);
         api.setUserInfo({
             name: userName,
             about: userJob
@@ -192,7 +203,7 @@ popupEditProfile.setEventListeners();
 // создаем попап изменения аватара профиля
 const popupAvatar = new PopupWithForm({
     handleFormSubmit: ({ link }) => {
-
+        popupAvatar.loading(true);
         api.setUserAvatar({ avatar: link })
             .then((res) => {
 

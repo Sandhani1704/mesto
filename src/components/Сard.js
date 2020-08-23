@@ -44,17 +44,19 @@ export class Card {
       }
 
     _getTemplate() {
-        const cardElement = document.querySelector(this._cardSelector).content.cloneNode(true);
+        const cardElement = document.querySelector(this._cardSelector).content
+        .querySelector('.elements__card')
+        .cloneNode(true);
         return cardElement
     }
 
-    _renderButtons() {
+    /*_renderButtons() {
         if(this._ownerId === this._userId) {
           this._element.querySelector('.elements__remove-button').classList.add('elements__remove-button_visible')
         } else {
           this._element.querySelector('.elements__remove-button').classList.add('elements__remove-button_hidden')
         }
-      }
+      } */
 
     generateCard() {
         this._element = this._getTemplate();
@@ -67,7 +69,7 @@ export class Card {
         this._imageCardName.textContent = this._name;
         this._image.alt = this._name;
         this._getLikeCount();
-        this._renderButtons();
+        //this._renderButtons();
         this._setEventListeners()
         return this._element;
 
@@ -80,7 +82,9 @@ export class Card {
 
 
     deleteElement() {
-        this._elementsCard.remove();
+      this._element.remove();
+      this._element = null;
+        //this._elementsCard.remove();
     }
 
    /* _setEventListeners() {
@@ -93,8 +97,9 @@ export class Card {
       this._image.addEventListener('click', () => {
           this._handleCardClick({
             link: this._link,
+            name: this._name,
             alt: this._name
-          });
+      });
         });
         this._element.querySelector('.elements__card-icon').addEventListener('click', () => {
           this._handleLikeClick(this);
