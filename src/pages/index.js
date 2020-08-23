@@ -39,8 +39,11 @@ const profileNameSelector = '.profile__user';
 const profileJobSelector = '.profile__user-explorer';
 
 const popupConfirm = new PopupWithConfirm('.popup-delete');
+
 // Создание экземпляра класса с информацией о пользователе
-const userProfile = new UserInfo({ userNameSelector: profileNameSelector, userJobSelector: profileJobSelector, userAvatar: avatarProfileSelector });
+const userProfile = new UserInfo({ userNameSelector: profileNameSelector, 
+userJobSelector: profileJobSelector, userAvatar: avatarProfileSelector });
+//const userId = userProfile.getUserId();
 
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
@@ -49,18 +52,17 @@ const api = new Api({
         authorization: '401963c2-8e67-4398-84ba-2d7df4f163fe'
     }
 });
-
+let myId = null
 api.getUserInfo()
     .then((result) => {
-        userProfile.setUserInfo(result.name, result.about, result.avatar);
+        userProfile.setUserInfo(result.name, result.about, result._id);
+        //const myId = result._id;
+        //console.log(myId)
     })
+    
+    
+    
 
-
-
-/*api.setUserAvatar()
-.then((result) => {
-    userProfile.setUserAvatar(result.link);
-})*/
 
 api.getInitialCards()
     .then((result) => {
@@ -92,7 +94,7 @@ api.getInitialCards()
                               })
                         })
                     }
-                }, '#element');
+                }, userProfile(), '#element');
                 const cardElement = card.generateCard();
                 initialCardList.setItem(cardElement);
 
@@ -125,7 +127,7 @@ api.getInitialCards()
                                     })
 
                             }
-                        }, '#element');
+                        }, userProfile(),'#element');
                         const cardElement = card.generateCard();
                         initialCardList.addItem(cardElement);
 

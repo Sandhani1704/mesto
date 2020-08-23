@@ -1,11 +1,11 @@
 export class Card {
     //constructor(name, link, cardTemplate, handleCardClick) {
-        constructor ({data, handleCardClick, handleLikeClick, handleDeleteButtonClick}, cardSelector) {
+        constructor ({data, handleCardClick, handleLikeClick, handleDeleteButtonClick}, userId, cardSelector) {
         /*this._name = name;
         this._link = link;
-        
-        this._isLiked = false;
         this._handleCardClick = handleCardClick;*/
+        //this._isLiked = false;
+    this._userId = userId._id;    
     this._name = data.name;
     this._link = data.link;
     this._alt = data.alt;
@@ -23,6 +23,7 @@ export class Card {
         const likesCount = this._likes == undefined || this._likes == null ? 0 : this._likes.length;
         this._element.querySelector('.elements__like-count').textContent = likesCount;
         if (this.isLiked()) {
+          
           this._element.querySelector('.elements__card-icon').classList.add('elements__card-icon_active');
         } else {
           this._element.querySelector('.elements__card-icon').classList.remove('elements__card-icon_active');
@@ -50,13 +51,13 @@ export class Card {
         return cardElement
     }
 
-    /*_renderButtons() {
+    _renderButtons() {
         if(this._ownerId === this._userId) {
           this._element.querySelector('.elements__remove-button').classList.add('elements__remove-button_visible')
         } else {
           this._element.querySelector('.elements__remove-button').classList.add('elements__remove-button_hidden')
         }
-      } */
+      } 
 
     generateCard() {
         this._element = this._getTemplate();
@@ -68,6 +69,8 @@ export class Card {
         this._image.src = this._link;
         this._imageCardName.textContent = this._name;
         this._image.alt = this._name;
+        if (this._ownerId === this._userId)
+        {this._element.querySelector('.elements__remove-button').classList.add('elements__remove-button_visible')}
         this._getLikeCount();
         //this._renderButtons();
         this._setEventListeners()
@@ -75,11 +78,10 @@ export class Card {
 
     }
 
-    /*_handleLikeIcon() {
+   /*_handleLikeIcon() {
         this._isLiked = !this._isLiked;
         this._likeButton.classList.toggle('elements__card-icon_active');
-    }*/
-
+    } */
 
     deleteElement() {
       this._element.remove();
@@ -103,6 +105,7 @@ export class Card {
         });
         this._element.querySelector('.elements__card-icon').addEventListener('click', () => {
           this._handleLikeClick(this);
+          //this._getLikeCount()
         });
         this._element.querySelector('.elements__remove-button').addEventListener('click', () => {
           this._handleDeleteButtonClick(this);
