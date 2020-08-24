@@ -7,6 +7,7 @@
 @import url(./__user-explorer/profile__user-explorer.css);
 @import url(./__user/profile__user.css);
 @import url(./__title/profile__title.css);
+@import url(./__image-container/profile__image-container.css);
 @import url(./__avatar-button/profile__avatar-button.css);
 
 .profile {
