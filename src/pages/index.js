@@ -66,10 +66,10 @@ api.getUserInfo()
 
     })
 
-let globalHandleCardClick = (data) => {
+const globalHandleCardClick = (data) => {
     popupPicImage.open(data)
 }
-let globalHandleLikeCardClick = (card) => {
+const globalHandleLikeCardClick = (card) => {
     if (card.isLiked()) {
         api.removeLike(card.id())
             .then((data) => {
@@ -82,7 +82,7 @@ let globalHandleLikeCardClick = (card) => {
             })
     }
 }
-let globalHandleDeleteCardClick = (card) => {
+const globalHandleDeleteCardClick = (card) => {
     popupConfirm.open();
     popupConfirm.handleButton(() => {
         api.deleteCard(card.id())
