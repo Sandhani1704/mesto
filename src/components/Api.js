@@ -20,7 +20,7 @@ export default class Api {
       }
 
       setUserInfo( {name, about} ) {
-        //renderLoading(true);
+        //loading(true);
         return fetch(`${this._baseUrl}/users/me`, {
           method: 'PATCH',
           headers: this._headers,
@@ -55,7 +55,7 @@ export default class Api {
       }
 
       addCard({ name, link, alt }) {
-        //renderLoading(true);
+        //loading(true);
         return fetch(`${this._baseUrl}/cards`, {
           method: 'POST',
           headers: this._headers,
